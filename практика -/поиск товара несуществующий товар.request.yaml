@@ -1,0 +1,42 @@
+$kind: http-request
+name: поиск товара несуществующий товар (404)
+url: https://dummyjson.com/products/999999
+method: GET
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();    \r
+
+      pm.test(\"Status code is 404\", function () {\r
+
+      \    pm.response.to.have.status(404);    \r
+
+      }) ;\r
+
+      pm.test(\"response it is json\", function () {\r
+
+      pm.response.to.be.json\r
+
+      });\r
+
+      pm.test(\"в response существует ключ message\", function () {\r
+
+      \    pm.expect(response).to.have.property('message');\r
+
+      });\r
+
+      pm.test(\"проверка типа  поля message\", function () {\r
+
+      \    pm.expect(response.message).to.be.a('string');\r
+
+      }); \r
+
+      pm.test(\" поле message не являеться пустой строкой\", function () {\r
+
+      \    pm.expect (response.message).to.not.be.eql(\"\")\r
+
+      }); "
+    language: text/javascript
+order: 4180685762247195

@@ -1,0 +1,102 @@
+$kind: http-request
+url: https://dummyjson.com/products
+method: GET
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json(); \r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      pm.response.to.have.status(200)\r
+
+      }) ;\r
+
+      \r
+
+      \r
+
+      pm.test(\"Response являеться json \", function () {\r
+
+      \    pm.response.to.be.json\r
+
+      })  \r
+
+      pm.test(\"products являеться массивом\", function () {    \r
+
+      \    pm.expect(response.products).to.be.an('array')\r
+
+      })\r
+
+      pm.test(\"id являеться числом\", function () {   \r
+
+      \    pm.expect (response.products.every (item => typeof item.id === \"number\")).to.be.true    \r
+
+      })  \r
+
+      pm.test(\"title не пустая \", function () {   \r
+
+      \   pm.expect(\r
+
+      \    response.products.every(item =>\r
+
+      \        typeof item.title === \"string\" &&\r
+
+      \        item.title.trim().length > 0\r
+
+      \    )\r
+
+      ).to.be.true;\r
+
+      })  \r
+
+      pm.test(\"у каждого товара price положительный\", function () { \r
+
+      \    pm.expect (response.products.every (item => item.price > 0 )).to.be.true\r
+
+      })\r
+
+      pm.test(\"total имеет тип number и не меньше количества возвращённых товаров.\", function ()\r
+
+      \ {\r
+
+      \    pm.expect(typeof response.total).to.equal(\"number\")\r
+
+      \    pm.expect(response.total).to.be.at.least(response.products.length)\r
+
+      })\r
+
+      pm.test(\"каждый товар имеет уникальный id\", function () {\r
+
+      \    const ids = response.products.map(product => product.id);\r
+
+      \    pm.expect(ids.length).to.equal(new Set(ids).size);\r
+
+      })\r
+
+      \r
+
+      \    \r
+
+      pm.test(\"products не пустой\", function () {\r
+
+      \    pm.expect(response.products).to.not.be.empty;\r
+
+      })\r
+
+      \r
+
+      pm.test(\"limit и skip являются неотрицательными целыми числами\", function () {\r
+
+      \    pm.expect(Number.isInteger(response.limit)).to.be.true;\r
+
+      \    pm.expect(response.limit).to.be.at.least(0);\r
+
+      \r
+
+      \    pm.expect(Number.isInteger(response.skip)).to.be.true;\r
+
+      \    pm.expect(response.skip).to.be.at.least(0);\r
+
+      });"
+    language: text/javascript
+order: 4429134754818482

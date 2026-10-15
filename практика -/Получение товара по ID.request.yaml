@@ -1,0 +1,82 @@
+$kind: http-request
+url: https://dummyjson.com/products/1
+method: GET
+scripts:
+  - type: afterResponse
+    code: "\r
+
+      const response = pm.response.json(); \r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      pm.response.to.have.status(200)\r
+
+      }) ;\r
+
+      \r
+
+      \r
+
+      pm.test(\"Response являеться json \", function () {\r
+
+      \    pm.response.to.be.json\r
+
+      })  \r
+
+      pm.test(\"ответ являеться объектом\", function () {\r
+
+      \    pm.expect(Object.isObject(response)).to.be.true\r
+
+      })  \r
+
+      pm.test(\"id продукта равен 1\", function () {\r
+
+      \    pm.expect(response.id).to.be.eql(1) \r
+
+      })    \r
+
+      pm.test(\"tittle имеет тип string\", function () { \r
+
+      \    pm.expect(typeof response.title).to.be.eql('string')\r
+
+      }) \r
+
+      pm.test(\"title не являеться пустой\", function () {\r
+
+      \    pm.expect(response.title).to.not.be.empty \r
+
+      }) \r
+
+      pm.test(\"price имее тип number  и положительный \", function () { \r
+
+      \    pm.expect (response.price).to.be.a (\"number\")\r
+
+      \   pm.expect (response.price).to.be.above (0)\r
+
+      \r
+
+      }) \r
+
+      \r
+
+      pm.test(\"category имеет тип string и не являеться пустой \", function () { \r
+
+      \    pm.expect(response.category).to.be.a(\"string\")\r
+
+      \    pm.expect (response.category).to.not.be.empty\r
+
+      })\r
+
+      \r
+
+      pm.test(\"поле images являеться не пустым пасивом и каждый его элемент срока должен быть строкой\", function () {\r
+
+      \    pm.expect(response.images).to.be.an(\"array\")\r
+
+      \    pm.expect (response.images).to.not.be.empty\r
+
+      \    pm.expect(response.images.every(item => typeof item === \"string\")).to.be.true\r
+
+      })\r\n"
+    language: text/javascript
+order: 4429134754817482

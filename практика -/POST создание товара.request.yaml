@@ -1,0 +1,70 @@
+$kind: http-request
+url: https://dummyjson.com/products/add
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"QA Test Product\",\r
+
+    \  \"price\": 500\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();  \r
+
+      \r
+
+      pm.test(\"Проверка статуса 201\", function () {\r
+
+      \    pm.response.to.have.status(201);\r
+
+      });\r
+
+      pm.test(\"response явялеться json \", function () {\r
+
+      \    pm.response.to.be.json; \r
+
+      }); \r
+
+      pm.test(\"Проверка наличия id в ответе\", function () {\r
+
+      \    pm.expect(response).to.have.property('id'); \r
+
+      }); \r
+
+      pm.test(\"Проверка типа id \", function () {\r
+
+      \    pm.expect(response.id).to.be.a('number');\r
+
+      }); \r
+
+      pm.test(\"совпадения имени товара с именем ис POST запроса\", function () {\r
+
+      \    pm.expect(response.title).to.be.eql(\"QA Test Product\"); \r
+
+      }); \r
+
+      pm.test(\"Проверка типа price \", function () {\r
+
+      \    pm.expect(response.price).to.be.a('number');\r
+
+      }); \r
+
+      pm.test(\"Проверка значения price\", function() {\r
+
+      \    pm.expect(response.price).to.be.eql(500);   \r
+
+      }); \r
+
+      pm.test(\"Проверка id больше 0  \", function () {\r
+
+      \    pm.expect(response.id).to.be.above(0);\r
+
+      });\r\n"
+    language: text/javascript
+  - type: beforeRequest
+    code: ""
+    language: text/javascript
+order: 1790747311565

@@ -1,0 +1,76 @@
+$kind: http-request
+url: https://dummyjson.com/products?limit=5&skip=5
+method: GET
+queryParams:
+  limit: "5"
+  skip: "5"
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();\r
+
+      \r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Response is JSON\", function () {\r
+
+      \    pm.response.to.be.json;\r
+
+      });\r
+
+      \r
+
+      pm.test(\"поле products является массивом\", function () {\r
+
+      \    pm.expect(Array.isArray(response.products)).to.be.true;\r
+
+      });\r
+
+      pm.test(\"поле products содержит 5 элементов\", function () {\r
+
+      \    pm.expect(response.products.length).to.equal(5);\r
+
+      });\r
+
+      pm.test(\"поле products каждое id имеет тип numbers\", function () {  \r
+
+      \    pm.expect (response.products.every (item=> typeof item.id === \"number\")).to.be.true \r
+
+      });\r
+
+      pm.test(\"поле products каждое price имеет тип numbers\", function () {  \r
+
+      \    pm.expect (response.products.every (item=> typeof item.price === \"number\")).to.be.true \r
+
+      });\r
+
+      pm.test(\"поле products skip равен 5\", function () {\r
+
+      \    pm.expect(response.skip).to.equal(5);\r
+
+      });\r
+
+      pm.test(\"поле products limit  равен 5\", function () {\r
+
+      \    pm.expect(response.limit).to.equal(5);\r
+
+      });\r
+
+      pm.test(\"уникальность id в products\", function () {\r
+
+      \    const ids = response.products.map(product => product.id); \r
+
+      \    pm.expect(ids.length).to.equal(new Set(ids).size);\r
+
+      });"
+    language: text/javascript
+order: 4429134754815482

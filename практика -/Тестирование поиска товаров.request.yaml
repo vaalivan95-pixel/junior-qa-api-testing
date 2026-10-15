@@ -1,0 +1,79 @@
+$kind: http-request
+url: https://dummyjson.com/products/search?q=phone
+method: GET
+queryParams:
+  q: phone
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json(); \r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      pm.response.to.have.status(200)\r
+
+      }) ;\r
+
+      \r
+
+      \r
+
+      pm.test(\"Response являеться json \", function () {\r
+
+      \    pm.response.to.be.json\r
+
+      })  \r
+
+      pm.test(\"producrts являеться массивом \", function () {\r
+
+      \    pm.expect (Array.isArray (response.products)).to.be.true \r
+
+      })    \r
+
+      pm.test(\"products массив не пустой\", function () {\r
+
+      \    pm.expect(response.products.length).to.be.above(0)\r
+
+      })\r
+
+      pm.test(\"у каждого товара есть title с типом string \", function () {\r
+
+      \    pm.expect(response.products.every(product => typeof product.title === 'string')).to.be.true\r
+
+      })\r
+
+      pm.test(\"у каждого товара есть price положительный\", function () {\r
+
+      \    pm.expect(response.products.every(product => product.price > 0)).to.be.true \r
+
+      })  \r
+
+      pm.test(\"у каждого товара id уникальный \", function () { \r
+
+      \    const ids = response.products.map(product => product.id)\r
+
+      \    pm.expect(new Set(ids).size).to.equal(ids.length)    \r
+
+      \    })\r
+
+      pm.test(\"Проверка релевантности поиска\", function () {\r
+
+      \    pm.expect(\r
+
+      \        response.products.every(product =>\r
+
+      \            product.title.toLowerCase().includes(\"phone\") ||\r
+
+      \            product.description.toLowerCase().includes(\"phone\")\r
+
+      \        )\r
+
+      \    ).to.be.true;\r
+
+      });\r
+
+      \r\n"
+    language: text/javascript
+order: 4429134754816482
