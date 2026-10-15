@@ -1,20 +1,20 @@
-\# API Test Execution Report
+ API Test Execution Report
 
 
 
-\*\*Project:\*\* DummyJSON REST API Testing  
+Project: DummyJSON REST API Testing  
 
-\*\*Test Date:\*\* October 15, 2026  
+Test Date: October 15, 2026  
 
-\*\*Test Environment:\*\* DummyJSON Public API  
+Test Environment: DummyJSON Public API  
 
-\*\*Tools:\*\* Postman, JavaScript, Chai Assertions  
+Tools: Postman, JavaScript, Chai Assertions  
 
-\*\*Execution Method:\*\* Postman Collection Runner
+Execution Method: Postman Collection Runner
 
 
 
-\## 1. Test Objective
+ 1. Test Objective
 
 
 
